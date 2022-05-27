@@ -1,0 +1,24 @@
+version: "3"
+services:
+  standalone-chrome:
+    image: selenium/standalone-chrome
+    container_name: standalone-chrome
+    ports:
+      - "5900:5900"
+      - "4444:4444"
+    volumes:
+      - /dev/shm:/dev/shm
+    expose:
+      - 4444
+      - 5900
+    environment:
+      - HUB_HOST=standalone-chrome
+      - HUB_PORT=4444
+  testcasecode:
+    depends_on:
+      - standalone-chrome
+    build:
+      context: ./MSTestWithDocker
+      dockerfile: Dockerfile
+    
+
